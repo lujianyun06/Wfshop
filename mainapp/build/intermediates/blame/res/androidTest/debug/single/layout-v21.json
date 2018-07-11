@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/bc20831c96c90b9a8b2cc675022ce072/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/bc20831c96c90b9a8b2cc675022ce072/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/bc20831c96c90b9a8b2cc675022ce072/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/bc20831c96c90b9a8b2cc675022ce072/res/layout-v21/notification_action.xml"
+    }
+]

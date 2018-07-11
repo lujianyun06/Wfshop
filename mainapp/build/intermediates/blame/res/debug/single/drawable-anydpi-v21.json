@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/debug/drawable-anydpi-v21/design_ic_visibility_off.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/b1170829a0cb60cfaa2a586e1d16fdab/res/drawable-anydpi-v21/design_ic_visibility_off.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/debug/drawable-anydpi-v21/design_ic_visibility.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/b1170829a0cb60cfaa2a586e1d16fdab/res/drawable-anydpi-v21/design_ic_visibility.xml"
+    }
+]

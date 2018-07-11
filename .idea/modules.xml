@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/WfShop.iml" filepath="$PROJECT_DIR$/WfShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cartlibrary/cartlibrary.iml" filepath="$PROJECT_DIR$/cartlibrary/cartlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/indexlibrary/indexlibrary.iml" filepath="$PROJECT_DIR$/indexlibrary/indexlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mainapp/mainapp.iml" filepath="$PROJECT_DIR$/mainapp/mainapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/productcategorylibrary/productcategorylibrary.iml" filepath="$PROJECT_DIR$/productcategorylibrary/productcategorylibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/productdetaillibrary/productdetaillibrary.iml" filepath="$PROJECT_DIR$/productdetaillibrary/productdetaillibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/profilelibrary/profilelibrary.iml" filepath="$PROJECT_DIR$/profilelibrary/profilelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wangfu-annotations/wangfu-annotations.iml" filepath="$PROJECT_DIR$/wangfu-annotations/wangfu-annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wangfu-baselibrary/wangfu-baselibrary.iml" filepath="$PROJECT_DIR$/wangfu-baselibrary/wangfu-baselibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wangfu-compiler/wangfu-compiler.iml" filepath="$PROJECT_DIR$/wangfu-compiler/wangfu-compiler.iml" />
+    </modules>
+  </component>
+</project>
