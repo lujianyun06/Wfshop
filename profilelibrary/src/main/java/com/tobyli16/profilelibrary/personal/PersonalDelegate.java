@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.tobyli16.profilelibrary.R;
@@ -85,7 +86,6 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
         }
 
 
-
         final RecyclerView rvSettings = $(R.id.rv_personal_setting);
         $(R.id.tv_all_order).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +96,7 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
         $(R.id.img_user_avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (WangfuPreference.getCustomAppProfile("headimgurl").length() == 0 ) {
+                if (WangfuPreference.getCustomAppProfile("headimgurl").length() == 0) {
                     onClickAvatarSignIn();
                 } else {
                     onClickAvatar();
@@ -170,5 +170,16 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
     @Override
     public void onSignUpSuccess() {
 
+    }
+
+    @Override
+    public void onSignOutSuccess() {
+        ImageView avatarImageView = $(R.id.img_user_avatar);
+        TextView nicknameTextView = $(R.id.user_nickname);
+        nicknameTextView.setText(getString(R.string.log_out));
+        Glide.with(getContext())
+                .load(R.mipmap.avatar)
+                .into(avatarImageView);
+        Toast.makeText(getContext(), "退出成功", Toast.LENGTH_SHORT).show();
     }
 }

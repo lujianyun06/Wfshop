@@ -53,6 +53,7 @@ public class SignHandler {
         WangfuPreference.removeCustomAppProfile(openId);
         WangfuPreference.removeCustomAppProfile(unionId);
         AccountManager.setSignState(false);
+        signListener.onSignOutSuccess();
         //TODO 需要告诉视图，已经退出登录，并且清空头像
     }
 }
