@@ -1,1 +1,0 @@
-include ':mainapp', ':wangfu-baselibrary', ':wangfu-annotations', ':wangfu-compiler', ':indexlibrary', ':productdetaillibrary', ':productcategorylibrary', ':cartlibrary', ':profilelibrary'

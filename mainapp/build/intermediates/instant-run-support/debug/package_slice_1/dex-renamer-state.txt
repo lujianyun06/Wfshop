@@ -1,4 +1,0 @@
-#Sun Jul 08 11:17:36 CST 2018
-base.0=/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/transforms/dexMerger/debug/2
-path.0=classes.dex
-renamed.0=classes.dex
