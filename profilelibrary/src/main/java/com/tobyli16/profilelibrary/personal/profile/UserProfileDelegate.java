@@ -1,5 +1,6 @@
 package com.tobyli16.profilelibrary.personal.profile;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,9 @@ import com.tobyli16.profilelibrary.personal.list.ListBean;
 import com.tobyli16.profilelibrary.personal.list.ListItemType;
 import com.tobyli16.profilelibrary.personal.settings.NameDelegate;
 import com.tobyli16.profilelibrary.personal.sign.AccountManager;
+import com.tobyli16.profilelibrary.personal.sign.ISignListener;
+import com.tobyli16.profilelibrary.personal.sign.SignHandler;
+import com.tobyli16.profilelibrary.personal.sign.SignInDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,26 @@ public class UserProfileDelegate extends WangfuDelegate {
     @Override
     public Object setLayout() {
         return R.layout.delegate_user_profile;
+    }
+
+    private ISignListener mISignListener = null;
+
+    public void setmISignListener(ISignListener mISignListener) {
+        this.mISignListener = mISignListener;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
+    public static UserProfileDelegate create(ISignListener iSignListener) {
+        UserProfileDelegate userProfileDelegate = new UserProfileDelegate();
+        userProfileDelegate.setmISignListener(iSignListener);
+        return userProfileDelegate;
     }
 
     @Override
@@ -81,7 +105,7 @@ public class UserProfileDelegate extends WangfuDelegate {
         $(R.id.btn_sign_out).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountManager.setSignState(false);
+                SignHandler.onSignOut(mISignListener);
                 getSupportDelegate().pop();
 //                getSupportDelegate().startWithPop(new SignInDelegate());
             }

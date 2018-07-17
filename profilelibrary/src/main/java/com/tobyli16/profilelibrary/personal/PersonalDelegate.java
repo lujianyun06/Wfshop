@@ -50,7 +50,7 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
     }
 
     private void onClickAvatar() {
-        getParentDelegate().getSupportDelegate().start(new UserProfileDelegate());
+        getParentDelegate().getSupportDelegate().start(UserProfileDelegate.create(this));
     }
 
     private void onClickAvatarSignIn() {

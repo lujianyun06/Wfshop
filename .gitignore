@@ -9,3 +9,4 @@
 build/*
 /captures
 *.apk
+/mainapp/build/*
