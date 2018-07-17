@@ -12,11 +12,13 @@ import com.tobyli16.profilelibrary.personal.list.ListAdapter;
 import com.tobyli16.profilelibrary.personal.list.ListBean;
 import com.tobyli16.profilelibrary.personal.list.ListItemType;
 import com.tobyli16.profilelibrary.personal.settings.NameDelegate;
+import com.tobyli16.profilelibrary.personal.sign.AccountManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
+import cn.bupt.wfshop.util.storage.WangfuPreference;
 
 /**
  * Created by tobyli
@@ -33,11 +35,12 @@ public class UserProfileDelegate extends WangfuDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
 
         final RecyclerView recyclerView = $(R.id.rv_user_profile);
+        String headImgUrl = WangfuPreference.getCustomAppProfile("headimgurl");
 
         final ListBean image = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_AVATAR)
                 .setId(1)
-                .setImageUrl("http://i9.qhimg.com/t017d891ca365ef60b5.jpg")
+                .setImageUrl(headImgUrl, "http://i9.qhimg.com/t017d891ca365ef60b5.jpg")
                 .build();
 
         final ListBean name = new ListBean.Builder()
@@ -78,7 +81,7 @@ public class UserProfileDelegate extends WangfuDelegate {
         $(R.id.btn_sign_out).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                AccountManager.setSignState(false);
+                AccountManager.setSignState(false);
                 getSupportDelegate().pop();
 //                getSupportDelegate().startWithPop(new SignInDelegate());
             }

@@ -5,6 +5,9 @@ import android.preference.PreferenceManager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
+import java.security.Key;
+
 import cn.bupt.wfshop.app.Wangfu;
 
 /**
@@ -73,6 +76,13 @@ public final class WangfuPreference {
         getAppPreference()
                 .edit()
                 .putString(key, val)
+                .apply();
+    }
+
+    public static void removeCustomAppProfile(String key) {
+        getAppPreference()
+                .edit()
+                .remove(key)
                 .apply();
     }
 

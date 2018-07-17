@@ -1,0 +1,90 @@
+[
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_hint_foreground_material_dark.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_tint_switch_track.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/design_error.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/b1170829a0cb60cfaa2a586e1d16fdab/res/color/design_error.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_tint_btn_checkable.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_tint_edittext.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/ucrop_scale_text_view_selector.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.1-native.aar/c99432602d6f3b3d79ab4a04eb91070c/res/color/ucrop_scale_text_view_selector.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_btn_colored_text_material.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/design_tint_password_toggle.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/b1170829a0cb60cfaa2a586e1d16fdab/res/color/design_tint_password_toggle.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_hint_foreground_material_light.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_tint_spinner.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/color/abc_tint_default.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/5628ca8eb4f558d1400c57f2045e231e/res/color/abc_tint_default.xml"
+    }
+]

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/app_main">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/signin_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="{fa-chevron-left}"
+            android:textColor="@android:color/darker_gray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Back"
+            android:gravity="center"
+            />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="56dp">
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="{fa-weixin}"
+                android:textColor="#04b00f"
+                android:textSize="40sp" />
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/icon_sign_in_wechat"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:background="#04b00f"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="微信登录"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v7.widget.LinearLayoutCompat>

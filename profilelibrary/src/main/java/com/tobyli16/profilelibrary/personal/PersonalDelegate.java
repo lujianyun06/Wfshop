@@ -98,6 +98,8 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
             public void onClick(View view) {
                 if (WangfuPreference.getCustomAppProfile("headimgurl").length() == 0 ) {
                     onClickAvatarSignIn();
+                } else {
+                    onClickAvatar();
                 }
             }
         });

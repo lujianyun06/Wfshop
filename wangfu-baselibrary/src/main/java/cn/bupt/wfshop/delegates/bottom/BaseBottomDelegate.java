@@ -15,6 +15,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
                 itemTitle.setTextColor(mClickedColor);
             }
         }
-        //设置底部栏上方的页面，loadMultipleRootFragment加载多个同级根Fragment
+        //设置底部栏上方的页面，loadMultipleRootFragment加载多个同级根Fragment，注意下面第一句:ArrayList转数组
         final ISupportFragment[] delegateArray = ITEM_DELEGATES.toArray(new ISupportFragment[size]);
         getSupportDelegate().loadMultipleRootFragment(R.id.bottom_bar_delegate_container, mIndexDelegate, delegateArray);
     }

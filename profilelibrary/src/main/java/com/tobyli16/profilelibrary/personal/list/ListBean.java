@@ -89,6 +89,14 @@ public class ListBean implements MultiItemEntity {
             return this;
         }
 
+        public Builder setImageUrl(String imageUrl, String defaultUrl){
+            if(imageUrl==null){
+                return setImageUrl(defaultUrl);
+            } else {
+                return setImageUrl(imageUrl);
+            }
+        }
+
         public Builder setText(String text) {
             this.text = text;
             return this;

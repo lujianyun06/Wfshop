@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/anim-v21/design_bottom_sheet_slide_in.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/b1170829a0cb60cfaa2a586e1d16fdab/res/anim-v21/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/anim-v21/design_bottom_sheet_slide_out.xml",
+        "source": "/Users/lujianyun/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/b1170829a0cb60cfaa2a586e1d16fdab/res/anim-v21/design_bottom_sheet_slide_out.xml"
+    }
+]

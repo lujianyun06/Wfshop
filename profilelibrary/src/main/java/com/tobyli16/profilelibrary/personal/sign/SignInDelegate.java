@@ -50,16 +50,7 @@ public class SignInDelegate extends WangfuDelegate implements View.OnClickListen
                     @Override
                     public void onSignInSuccess(String userInfo) {
                         Toast.makeText(getContext(), userInfo, Toast.LENGTH_LONG).show();
-                        JSONObject jsonObject = JSONObject.parseObject(userInfo);
-                        String nickname = jsonObject.getString("nickname");
-                        String headimgurl = jsonObject.getString("headimgurl");
-                        String openid = jsonObject.getString("openid");
-                        String unionid = jsonObject.getString("unionid");
-                        WangfuPreference.addCustomAppProfile("nickname",nickname);
-                        WangfuPreference.addCustomAppProfile("headimgurl",headimgurl);
-                        WangfuPreference.addCustomAppProfile("openid",openid);
-                        WangfuPreference.addCustomAppProfile("unionid",unionid);
-                        mISignListener.onSignInSuccess();
+                        SignHandler.onSignIn(userInfo, mISignListener);
                         getSupportDelegate().pop();
                     }
                 })

@@ -40,6 +40,7 @@ public class ExampleActivity extends ProxyActivity implements
         JPushInterface.onResume(this);
     }
 
+    //(在父类中)调用该方法,达到设置fragment的效果
     @Override
     public WangfuDelegate setRootDelegate() {
         return new EcBottomDelegate();

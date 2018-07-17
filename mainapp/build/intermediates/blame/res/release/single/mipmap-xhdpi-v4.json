@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/mipmap-xhdpi-v4/wf_shop_icon.png",
+        "source": "/Users/lujianyun/Android/shuo/WfShop/mainapp/src/main/res/mipmap-xhdpi/wf_shop_icon.png"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/mipmap-xhdpi-v4/test_sort.png",
+        "source": "/Users/lujianyun/Android/shuo/WfShop/indexlibrary/build/intermediates/bundles/release/res/mipmap-xhdpi-v4/test_sort.png"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/mipmap-xhdpi-v4/app_logo.png",
+        "source": "/Users/lujianyun/Android/shuo/WfShop/mainapp/src/main/res/mipmap-xhdpi/app_logo.png"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/mipmap-xhdpi-v4/avatar.jpg",
+        "source": "/Users/lujianyun/Android/shuo/WfShop/indexlibrary/build/intermediates/bundles/release/res/mipmap-xhdpi-v4/avatar.jpg"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/mipmap-xhdpi-v4/ic_launcher_round.png",
+        "source": "/Users/lujianyun/Android/shuo/WfShop/mainapp/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/lujianyun/Android/shuo/WfShop/mainapp/build/intermediates/res/merged/release/mipmap-xhdpi-v4/ic_launcher.png",
+        "source": "/Users/lujianyun/Android/shuo/WfShop/mainapp/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    }
+]
