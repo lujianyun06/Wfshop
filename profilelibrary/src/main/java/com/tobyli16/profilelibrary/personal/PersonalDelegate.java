@@ -22,6 +22,7 @@ import com.tobyli16.profilelibrary.personal.list.ListItemType;
 import com.tobyli16.profilelibrary.personal.order.OrderListDelegate;
 import com.tobyli16.profilelibrary.personal.profile.UserProfileDelegate;
 import com.tobyli16.profilelibrary.personal.settings.SettingsDelegate;
+import com.tobyli16.profilelibrary.personal.sign.AccountManager;
 import com.tobyli16.profilelibrary.personal.sign.ISignListener;
 import com.tobyli16.profilelibrary.personal.sign.SignInDelegate;
 
@@ -73,18 +74,7 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
 
-        String headimgurl = WangfuPreference.getCustomAppProfile("headimgurl");
-        String user_nickname = WangfuPreference.getCustomAppProfile("nickname");
-
-        if (headimgurl.length() > 0) {
-            ImageView avatarImageView = $(R.id.img_user_avatar);
-            TextView nicknameTextView = $(R.id.user_nickname);
-            nicknameTextView.setText(user_nickname);
-            Glide.with(getContext())
-                    .load(headimgurl)
-                    .into(avatarImageView);
-        }
-
+        initAvatarAndNickname();
 
         final RecyclerView rvSettings = $(R.id.rv_personal_setting);
         $(R.id.tv_all_order).setOnClickListener(new View.OnClickListener() {
@@ -152,19 +142,37 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
         rvSettings.addOnItemTouchListener(new PersonalClickListener(this));
     }
 
-    @Override
-    public void onSignInSuccess() {
-        String headimgurl = WangfuPreference.getCustomAppProfile("headimgurl");
-        String user_nickname = WangfuPreference.getCustomAppProfile("nickname");
+    private void initAvatarAndNickname(){
+        boolean isSignIn = WangfuPreference.getAppFlag(AccountManager.SignTag.SIGN_TAG.name());
+        showAvatarBySignStatus(isSignIn);
+    }
 
-        if (headimgurl.length() > 0) {
+    private void showAvatarBySignStatus(boolean isSignIn){
+        if(isSignIn){
+            String headimgurl = WangfuPreference.getCustomAppProfile("headimgurl");
+            String user_nickname = WangfuPreference.getCustomAppProfile("nickname");
+
+            if (headimgurl.length() > 0) {
+                ImageView avatarImageView = $(R.id.img_user_avatar);
+                TextView nicknameTextView = $(R.id.user_nickname);
+                nicknameTextView.setText(user_nickname);
+                Glide.with(getContext())
+                        .load(headimgurl)
+                        .into(avatarImageView);
+            }
+        } else {
             ImageView avatarImageView = $(R.id.img_user_avatar);
             TextView nicknameTextView = $(R.id.user_nickname);
-            nicknameTextView.setText(user_nickname);
+            nicknameTextView.setText(getString(R.string.log_out));
             Glide.with(getContext())
-                    .load(headimgurl)
+                    .load(R.mipmap.avatar)
                     .into(avatarImageView);
         }
+    }
+
+    @Override
+    public void onSignInSuccess() {
+        showAvatarBySignStatus(true);
     }
 
     @Override
@@ -174,12 +182,7 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
 
     @Override
     public void onSignOutSuccess() {
-        ImageView avatarImageView = $(R.id.img_user_avatar);
-        TextView nicknameTextView = $(R.id.user_nickname);
-        nicknameTextView.setText(getString(R.string.log_out));
-        Glide.with(getContext())
-                .load(R.mipmap.avatar)
-                .into(avatarImageView);
+        showAvatarBySignStatus(false);
         Toast.makeText(getContext(), "退出成功", Toast.LENGTH_SHORT).show();
     }
 }

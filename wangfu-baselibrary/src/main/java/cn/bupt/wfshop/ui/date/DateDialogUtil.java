@@ -16,12 +16,16 @@ import java.util.Locale;
  */
 
 public class DateDialogUtil {
+    private final int YEAR_DEFAULT = 1990;
+    private final int MONTH_DEFAULT = 0;  //月份下标开始为0
+    private final int DAY_DEFAULT = 1;
 
     public interface IDateListener {
 
         void onDateChange(String date);
     }
 
+    private String dateString = YEAR_DEFAULT+"年"+(MONTH_DEFAULT+1)+"月"+DAY_DEFAULT+"日";
     private IDateListener mDateListener = null;
 
     public void setDateListener(IDateListener listener) {
@@ -37,16 +41,13 @@ public class DateDialogUtil {
 
         picker.setLayoutParams(lp);
 
-        picker.init(1990, 1, 1, new DatePicker.OnDateChangedListener() {
+        picker.init(YEAR_DEFAULT, MONTH_DEFAULT, DAY_DEFAULT, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 final Calendar calendar = Calendar.getInstance();
                 calendar.set(year, monthOfYear, dayOfMonth);
                 final SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault());
-                final String data = format.format(calendar.getTime());
-                if(mDateListener!=null){
-                    mDateListener.onDateChange(data);
-                }
+                dateString = format.format(calendar.getTime());
             }
         });
 
@@ -58,7 +59,9 @@ public class DateDialogUtil {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        if(mDateListener!=null && dateString!=null){
+                            mDateListener.onDateChange(dateString);
+                        }
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {

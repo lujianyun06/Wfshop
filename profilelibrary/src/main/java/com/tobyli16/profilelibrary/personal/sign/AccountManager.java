@@ -8,7 +8,7 @@ import cn.bupt.wfshop.util.storage.WangfuPreference;
 
 public class AccountManager {
 
-    private enum SignTag {
+    public enum SignTag {
         SIGN_TAG
     }
 

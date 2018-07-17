@@ -1,6 +1,7 @@
 package cn.bupt.wfshop.delegates;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
