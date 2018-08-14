@@ -8,7 +8,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.tobyli16.productcategorylibrary.R;
+import com.tobyli16.productcategorylibrary.sort.list.VerticalListDataConverter;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
@@ -50,24 +56,34 @@ public class ContentDelegate extends WangfuDelegate {
     }
 
     private void initData() {
-        RestClient.builder()
-//                .url("http://admin.swczyc.com/hyapi/ymmall/product/category/sub_categories?category_id=" + mContentId)
-                                .url("sort_content_list.php?contentId=" + mContentId)
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(String response) {
-                        if (response.contains("失败")) {
-                            return;
-                        }
-                        mData = new SectionDataConverter().convert(response);
-                        final SectionAdapter sectionAdapter =
-                                new SectionAdapter(R.layout.item_section_content,
+        //本来是应该再发一次请求的，但demo做的是一次请求吧所有数据都传过来,所以在verticalConvert中做了处理，吧每类物品的json
+        //数据放进静态变量中，直接从那边获取
+//        RestClient.builder()
+////                .url("http://admin.swczyc.com/hyapi/ymmall/product/category/sub_categories?category_id=" + mContentId)
+//                                .url("sort_content_list.php?contentId=" + mContentId)
+//                .success(new ISuccess() {
+//                    @Override
+//                    public void onSuccess(String response) {
+//                        if (response.contains("失败")) {
+//                            return;
+//                        }
+//                        mData = new SectionDataConverter().convert(response);
+//                        final SectionAdapter sectionAdapter =
+//                                new SectionAdapter(R.layout.item_section_content,
+//                                        R.layout.item_section_header, mData);
+//                        mRecyclerView.setAdapter(sectionAdapter);
+//                    }
+//                })
+//                .build()
+//                .get();
+        ArrayList<JSONObject> jsonObjects =  VerticalListDataConverter.getCategoryJsonData();
+        if (mContentId < jsonObjects.size()){
+            JSONObject data = VerticalListDataConverter.getCategoryJsonData().get(mContentId);
+            mData = new SectionDataConverter().convert(data.toJSONString());
+            final SectionAdapter sectionAdapter = new SectionAdapter(R.layout.item_section_content,
                                         R.layout.item_section_header, mData);
-                        mRecyclerView.setAdapter(sectionAdapter);
-                    }
-                })
-                .build()
-                .get();
+            mRecyclerView.setAdapter(sectionAdapter);
+        }
     }
 
     @Override

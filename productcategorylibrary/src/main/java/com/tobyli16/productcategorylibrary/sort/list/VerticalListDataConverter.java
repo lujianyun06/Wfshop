@@ -17,20 +17,28 @@ import cn.bupt.wfshop.ui.recycler.MultipleItemEntity;
 
 public final class VerticalListDataConverter extends DataConverter {
 
+    private static ArrayList<JSONObject> jsonData = new ArrayList<>();
+
+    public static ArrayList<JSONObject> getCategoryJsonData(){
+        return jsonData;
+    }
+
     @Override
     public ArrayList<MultipleItemEntity> convert() {
 
         final ArrayList<MultipleItemEntity> dataList = new ArrayList<>();
         final JSONArray dataArray = JSON
                 .parseObject(getJsonData())
-                .getJSONObject("data")
-                .getJSONArray("list");
+//                .getJSONObject("data")
+                .getJSONArray("data");
 //                .getJSONArray("obj");
 
         final int size = dataArray.size();
         for (int i = 0; i < size; i++) {
             final JSONObject data = dataArray.getJSONObject(i);
-            final int id = data.getInteger("id");
+            jsonData.add(data);
+//            final int id = data.getInteger("id");
+            final int id = i;
             final String name = data.getString("name");
 
             final MultipleItemEntity entity = MultipleItemEntity.builder()

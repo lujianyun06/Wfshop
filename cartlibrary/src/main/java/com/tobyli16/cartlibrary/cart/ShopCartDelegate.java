@@ -27,6 +27,7 @@ import java.util.WeakHashMap;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.delegates.bottom.BottomItemDelegate;
+import cn.bupt.wfshop.net.NetManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.ISuccess;
 
@@ -116,7 +117,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
         super.onLazyInitView(savedInstanceState);
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/get_items?wechat_id=8")
-                .url("https://wfshop.andysheng.cn/cart")
+                .url(NetManager.CART_URL)
                 .loader(getContext())
                 .success(this)
                 .build()
@@ -129,7 +130,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
         super.onHiddenChanged(hidden);
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/get_items?wechat_id=8")
-                .url("https://wfshop.andysheng.cn/cart")
+                .url(NetManager.CART_URL)
                 .loader(getContext())
                 .success(this)
                 .build()
@@ -218,7 +219,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
             public void onDeleteClick(View view, int position, int cartid) {
                 RestClient.builder()
 //                        .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/delete_items")
-                        .url("https://wfshop.andysheng.cn/cart/modify/" + cartid)
+                        .url(NetManager.CART_URL + "/modify/" + cartid)
                         .params("quantity", 0)
 //                        .params("id", cartid)
                         .loader(getContext())
@@ -242,7 +243,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
                 RestClient.builder()
 //                        .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/edit_items")
 //                        .params("id",cartid)
-                        .url("https://wfshop.andysheng.cn/cart/modify/" + cartid)
+                        .url(NetManager.CART_URL + "/modify/" + cartid)
                         .params("quantity", count)
                         .loader(getContext())
                         .success(new ISuccess() {
@@ -325,7 +326,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
             }
             if (params.size()>0) {
                 RestClient.builder()
-                        .url("https://wfshop.andysheng.cn/order/create")  //先给服务器提交想要交易的请求，请求成功后才跳到下一个页面
+                        .url(NetManager.ORDER_URL + "/create")  //先给服务器提交想要交易的请求，请求成功后才跳到下一个页面
                         .loader(getContext())
                         .params(params)
                         .success(new ISuccess() {
@@ -342,7 +343,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
                                 for (int j = 0; j < mAllOrderList.size(); j++) {
                                     if (mAllOrderList.get(j).getIsSelect()) {
                                         RestClient.builder()
-                                                .url("https://wfshop.andysheng.cn/cart/modify/"+mAllOrderList.get(j).getId())
+                                                .url(NetManager.CART_URL + "/modify/"+mAllOrderList.get(j).getId())
                                                 .loader(getContext())
                                                 .params("amount", 0)  //为啥给0？
                                                 .build()

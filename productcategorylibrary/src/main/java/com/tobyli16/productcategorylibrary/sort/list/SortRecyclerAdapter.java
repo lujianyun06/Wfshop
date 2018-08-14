@@ -96,4 +96,8 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
             contentDelegate.getSupportDelegate().replaceFragment(delegate, false);
         }
     }
+
+    public void showFirstContent(){
+        showContent(1);
+    }
 }

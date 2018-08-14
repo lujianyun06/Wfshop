@@ -10,5 +10,6 @@ public class NetManager {
     //    public static final String BASEURL = "http://wfshop.andysheng.cn";
     public static final String CART_URL = BASEURL + "/cart";
     public static final String ORDER_URL = BASEURL + "/order";
+    public static final String CATEGORY_URL = BASEURL + "/category";
     public static final String HOME_PAGE = "homepage";
 }
