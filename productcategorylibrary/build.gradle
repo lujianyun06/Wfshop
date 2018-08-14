@@ -18,7 +18,7 @@ android {
         //ARouter
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
 
@@ -56,5 +56,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation project(':wangfu-baselibrary')
-    annotationProcessor "com.alibaba:arouter-compiler:+"
+    annotationProcessor "com.alibaba:arouter-compiler:1.2.0"
 }
