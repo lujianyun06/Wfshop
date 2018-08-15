@@ -20,10 +20,14 @@ import com.tobyli16.indexlibrary.R;
 import com.tobyli16.indexlibrary.index.refresh.RefreshHandler;
 import com.tobyli16.indexlibrary.index.search.SearchDelegate;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import cn.bupt.wfshop.app.ConfigKeys;
 import cn.bupt.wfshop.app.Wangfu;
 import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.delegates.bottom.BottomItemDelegate;
+import cn.bupt.wfshop.delegates.web.event.Event;
 import cn.bupt.wfshop.ui.recycler.BaseDecoration;
 import cn.bupt.wfshop.util.callback.CallbackManager;
 import cn.bupt.wfshop.util.callback.CallbackType;
@@ -118,7 +122,7 @@ public class IndexDelegate extends BottomItemDelegate {
         }
         final GridLayoutManager manager = new GridLayoutManager(getContext(), spanCount);
         final Context context = getContext();
-        //TODO 这句导致下拉刷新球无法被拉出,并且swipelayout和recycleView共同使用可能会导致滑动冲突
+        //TODO 这句代码中的 stopscroll 导致下拉刷新球无法被拉出,并且swipelayout和recycleView共同使用可能会导致滑动冲突
         mRecyclerView.setLayoutManager(manager);
         if (context != null) {
             mRecyclerView.addItemDecoration

@@ -1,7 +1,9 @@
 package com.tobyli16.indexlibrary.index.search;
 
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.tobyli16.indexlibrary.R;
 
 import java.util.List;

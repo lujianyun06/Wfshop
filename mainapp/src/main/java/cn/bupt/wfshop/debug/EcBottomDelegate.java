@@ -23,7 +23,7 @@ public class EcBottomDelegate extends BaseBottomDelegate {
     }
 
     @Override
-    public int setIndexDelegate() {
+    public int initIndexDelegate() {
         return 0;
     }
 

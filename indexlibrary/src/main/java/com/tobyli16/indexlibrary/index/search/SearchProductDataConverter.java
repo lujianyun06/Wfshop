@@ -26,7 +26,7 @@ public class SearchProductDataConverter extends DataConverter {
         String str = getJsonData();
         Log.e("search",str);
 //        JSONArray jsonArray = JSON.parseObject(getJsonData()).getJSONObject("obj").getJSONArray("rows");
-        JSONArray jsonArray = JSON.parseObject(getJsonData()).getJSONArray("data");
+        JSONArray jsonArray = JSON.parseObject(str).getJSONArray("data");
         final int size = jsonArray.size();
         for (int i = 0; i < size; i++) {
 //            final JSONObject data = jsonArray.getJSONObject(i).getJSONObject("specialty");

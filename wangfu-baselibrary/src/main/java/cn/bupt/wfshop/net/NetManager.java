@@ -11,5 +11,7 @@ public class NetManager {
     public static final String CART_URL = BASEURL + "/cart";
     public static final String ORDER_URL = BASEURL + "/order";
     public static final String CATEGORY_URL = BASEURL + "/category";
+
+    public static final String SEARCH_URL = BASEURL + "/search";
     public static final String HOME_PAGE = "homepage";
 }

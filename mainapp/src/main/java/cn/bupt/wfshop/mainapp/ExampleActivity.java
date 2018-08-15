@@ -7,9 +7,13 @@ import android.util.Log;
 
 import com.alipay.sdk.app.EnvUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import cn.bupt.wfshop.activities.ProxyActivity;
 import cn.bupt.wfshop.app.Wangfu;
 import cn.bupt.wfshop.delegates.WangfuDelegate;
+import cn.bupt.wfshop.event.WFEvent;
 import cn.bupt.wfshop.ui.launcher.ILauncherListener;
 import cn.bupt.wfshop.ui.launcher.OnLauncherFinishTag;
 import cn.jpush.android.api.JPushInterface;

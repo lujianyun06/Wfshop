@@ -11,11 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -32,7 +30,6 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
     private final ArrayList<BottomTabBean> TAB_BEANS = new ArrayList<>();  //存放tabbean，tabbean是每一项的 图片名称&文字名称
     private final ArrayList<BottomItemDelegate> ITEM_DELEGATES = new ArrayList<>(); //存放页面
     private final LinkedHashMap<BottomTabBean, BottomItemDelegate> ITEMS = new LinkedHashMap<>();  //存放tabbean与每一项所指页面的映射
-    private int mCurrentDelegate = 0;
     private int mIndexDelegate = 0;
     private int mClickedColor = Color.RED;
 
@@ -49,7 +46,7 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
         return R.layout.delegate_bottom;
     }
 
-    public abstract int setIndexDelegate();
+    public abstract int initIndexDelegate();
 
     @ColorInt
     public abstract int setClickedColor();
@@ -57,7 +54,7 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIndexDelegate = setIndexDelegate();
+        mIndexDelegate = initIndexDelegate();
         if (setClickedColor() != 0) {
             mClickedColor = setClickedColor();
         }
@@ -91,7 +88,7 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
             //初始化数据
             itemIcon.setText(bean.getIcon());  //图片的三方库，图片为矢量图，可以当做文字一样的添加
             itemTitle.setText(bean.getTitle());
-            if (i == mIndexDelegate) {      //初始让index页面直接被选中
+            if (i == mIndexDelegate) {      //如果i等于当前选中的号，则切换显示状态
                 itemIcon.setTextColor(mClickedColor);
                 itemTitle.setTextColor(mClickedColor);
             }
@@ -125,8 +122,8 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
     public void onClick(View v) {
         final int tabIndex = (int) v.getTag();
         changeColor(tabIndex);
-        getSupportDelegate().showHideFragment(ITEM_DELEGATES.get(tabIndex), ITEM_DELEGATES.get(mCurrentDelegate));
+        getSupportDelegate().showHideFragment(ITEM_DELEGATES.get(tabIndex), ITEM_DELEGATES.get(mIndexDelegate));
         //注意先后顺序
-        mCurrentDelegate = tabIndex;
+        mIndexDelegate = tabIndex;
     }
 }
