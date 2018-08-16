@@ -18,14 +18,14 @@ import cn.bupt.wfshop.delegates.WangfuDelegate;
  * Created by tobyli
  */
 
-public class GoodsInfoDelegate extends WangfuDelegate {
+public class ProductInfoDelegate extends WangfuDelegate {
 
     private static final String ARG_GOODS_DATA = "ARG_GOODS_DATA";
     private JSONObject mData = null;
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_goods_info;
+        return R.layout.delegate_product_info;
     }
 
     @Override
@@ -39,10 +39,10 @@ public class GoodsInfoDelegate extends WangfuDelegate {
         }
     }
 
-    public static GoodsInfoDelegate create(String goodsInfo) {
+    public static ProductInfoDelegate create(String goodsInfo) {
         final Bundle args = new Bundle();
         args.putString(ARG_GOODS_DATA, goodsInfo);
-        final GoodsInfoDelegate delegate = new GoodsInfoDelegate();
+        final ProductInfoDelegate delegate = new ProductInfoDelegate();
         delegate.setArguments(args);
         return delegate;
     }

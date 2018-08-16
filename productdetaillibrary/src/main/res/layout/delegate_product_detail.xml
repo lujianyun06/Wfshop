@@ -20,6 +20,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:statusBarScrim="@android:color/transparent">
 
+                <!--广告轮播图 -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -36,7 +37,7 @@
                         android:layout_below="@+id/detail_banner" />
                 </RelativeLayout>
 
-                <!--要放在下面-->
+                <!--toolbar要放在这里，成为父控件的最后一个子控件，这是规定-->
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/goods_detail_toolbar"
                     android:layout_width="match_parent"

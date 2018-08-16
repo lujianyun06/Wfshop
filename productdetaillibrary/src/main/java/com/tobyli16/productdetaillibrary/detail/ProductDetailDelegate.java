@@ -35,8 +35,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
+import cn.bupt.wfshop.net.NetManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.IError;
+import cn.bupt.wfshop.net.callback.IFailure;
 import cn.bupt.wfshop.net.callback.ISuccess;
 import cn.bupt.wfshop.ui.animation.BezierAnimation;
 import cn.bupt.wfshop.ui.animation.BezierUtil;
@@ -53,9 +55,10 @@ import onekeyshare.OnekeyShare;
  */
 
 @Route(path="/productDetail/productId/")
-public class GoodsDetailDelegate extends WangfuDelegate implements
+public class ProductDetailDelegate extends WangfuDelegate implements
         BezierUtil.AnimationListener {
 
+    private final static String TAG = "ProductDetailDelegate";
     @Autowired
     public String goodsId;
 
@@ -124,17 +127,17 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
         }
     }
 
-    public static GoodsDetailDelegate create(int goodsId) {
+    public static ProductDetailDelegate create(int goodsId) {
         final Bundle args = new Bundle();
         args.putInt(ARG_GOODS_ID, goodsId);
-        final GoodsDetailDelegate delegate = new GoodsDetailDelegate();
+        final ProductDetailDelegate delegate = new ProductDetailDelegate();
         delegate.setArguments(args);
         return delegate;
     }
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_goods_detail;
+        return R.layout.delegate_product_detail;
     }
 
     @Override
@@ -181,7 +184,9 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
         });
 
         mCollapsingToolbarLayout.setContentScrimColor(Color.WHITE);
-        mCircleTextView.setCircleBackground(Color.RED);
+//        mCircleTextView.setCircleBackground(Color.RED);
+        if (mShopCount==0)
+            mCircleTextView.setVisibility(View.GONE);
         initData();
         initTabLayout();
     }
@@ -209,7 +214,7 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
     private void initData() {
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/product/search?specialty_id="+mGoodsId)
-                .url("https://wfshop.andysheng.cn/product/"+mGoodsId)
+                .url( NetManager.PRODUCT_URL + "/"+mGoodsId)
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override
@@ -220,6 +225,7 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
 //                        spId = String.valueOf(data.getJSONObject("specification").getString("id"));
                         initBanner(data);
                         initGoodsInfo(data);
+                        //获取该商品评论
                         RestClient.builder()
 //                                .url("http://admin.swczyc.com/hyapi/ymmall/product/appraisedetail?id="+mGoodsId)
                                 .url("https://wfshop.andysheng.cn/product/"+mGoodsId+"/comment")
@@ -236,6 +242,7 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
                                 })
                                 .build()
                                 .get();
+                        //TODO 获取购物车？交互的时候不需要传入user吗？
                         RestClient.builder()
                                 .url("https://wfshop.andysheng.cn/cart")
                                 .loader(getContext())
@@ -252,25 +259,24 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
 
                     }
                 })
+                .error(new IError() {
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d(TAG, msg);
+                    }
+                })
                 .build()
                 .get();
     }
 
     private void initGoodsInfo(JSONObject data) {
         shareContent = data.getString("name");
-        final String goodsData = data.toJSONString();
+        String goodsData = data.toJSONString();
         getSupportDelegate().
-                loadRootFragment(R.id.frame_goods_info, GoodsInfoDelegate.create(goodsData));
+                loadRootFragment(R.id.frame_goods_info, ProductInfoDelegate.create(goodsData));
     }
 
     private void initBanner(JSONObject data) {
-//        final JSONArray array = data.getJSONObject("specialty").getJSONArray("images");
-//        final List<String> images = new ArrayList<>();
-//        sharePicUrl = array.getJSONObject(0).getString("largePath");
-//        final int size = array.size();
-//        for (int i = 0; i < size; i++) {
-//            images.add(array.getJSONObject(i).getString("largePath"));
-//        }
         final JSONArray array = data.getJSONArray("img_urls");
         final List<String> images = new ArrayList<>();
         sharePicUrl = array.getString(0);
@@ -294,7 +300,7 @@ public class GoodsDetailDelegate extends WangfuDelegate implements
 
     @Override
     public void onAnimationEnd() {
-        YoYo.with(new ScaleUpAnimator())
+        YoYo.with(new ScaleUpAnimator())  //购物车小图片放大动画
                 .duration(500)
                 .playOn(mIconShopCart);
         RestClient.builder()
