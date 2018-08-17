@@ -20,6 +20,7 @@ import com.tobyli16.profilelibrary.personal.list.ListAdapter;
 import com.tobyli16.profilelibrary.personal.list.ListBean;
 import com.tobyli16.profilelibrary.personal.list.ListItemType;
 import com.tobyli16.profilelibrary.personal.order.OrderListDelegate;
+import com.tobyli16.profilelibrary.personal.othersettings.OtherSettingDelegate;
 import com.tobyli16.profilelibrary.personal.profile.UserProfileDelegate;
 import com.tobyli16.profilelibrary.personal.settings.SettingsDelegate;
 import com.tobyli16.profilelibrary.personal.sign.AccountManager;
@@ -29,6 +30,7 @@ import com.tobyli16.profilelibrary.personal.sign.SignInDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.delegates.bottom.BottomItemDelegate;
 import cn.bupt.wfshop.util.storage.WangfuPreference;
 
@@ -76,7 +78,7 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
 
         initAvatarAndNickname();
 
-        final RecyclerView rvSettings = $(R.id.rv_personal_setting);
+
         $(R.id.tv_all_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,33 +115,35 @@ public class PersonalDelegate extends BottomItemDelegate implements ISignListene
         });
 
 
+        WangfuDelegate parent = getParentDelegate();
+        parent.getSupportDelegate().loadRootFragment(R.id.container_othersetting, new OtherSettingDelegate());
 //        tv_all_coupon
-
-        final ListBean address = new ListBean.Builder()
-                .setItemType(ListItemType.ITEM_NORMAL)
-                .setId(1)
-                .setDelegate(new AddressDelegate())
-                .setText("收货地址")
-                .build();
-
-        final ListBean system = new ListBean.Builder()
-                .setItemType(ListItemType.ITEM_NORMAL)
-                .setId(2)
-                .setDelegate(new SettingsDelegate())
-                .setText("系统设置")
-                .build();
-
-
-        final List<ListBean> data = new ArrayList<>();
-        data.add(address);
-        data.add(system);
-
-        //设置RecyclerView
-        final LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        rvSettings.setLayoutManager(manager);
-        final ListAdapter adapter = new ListAdapter(data);
-        rvSettings.setAdapter(adapter);
-        rvSettings.addOnItemTouchListener(new PersonalClickListener(this));
+//        final RecyclerView rvSettings = $(R.id.rv_personal_setting);
+//        final ListBean address = new ListBean.Builder()
+//                .setItemType(ListItemType.ITEM_NORMAL)
+//                .setId(1)
+//                .setDelegate(new AddressDelegate())
+//                .setText("收货地址")
+//                .build();
+//
+//        final ListBean system = new ListBean.Builder()
+//                .setItemType(ListItemType.ITEM_NORMAL)
+//                .setId(2)
+//                .setDelegate(new SettingsDelegate())
+//                .setText("系统设置")
+//                .build();
+//
+//
+//        final List<ListBean> data = new ArrayList<>();
+//        data.add(address);
+//        data.add(system);
+//
+//        //设置RecyclerView
+//        final LinearLayoutManager manager = new LinearLayoutManager(getContext());
+//        rvSettings.setLayoutManager(manager);
+//        final ListAdapter adapter = new ListAdapter(data);
+//        rvSettings.setAdapter(adapter);
+//        rvSettings.addOnItemTouchListener(new PersonalClickListener(this));
     }
 
     private void initAvatarAndNickname(){

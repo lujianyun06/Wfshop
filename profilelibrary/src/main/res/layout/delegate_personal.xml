@@ -560,12 +560,17 @@
                 android:text="{fa-chevron-right}"
                 android:textColor="@android:color/darker_gray"/>
         </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_personal_setting"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"/>
+            android:layout_height="20px"
+            />
+
+        <android.support.v7.widget.ContentFrameLayout
+            android:id="@+id/container_othersetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.ContentFrameLayout>
     </LinearLayout>
 
 </ScrollView>
