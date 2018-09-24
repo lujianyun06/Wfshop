@@ -17,8 +17,8 @@ public class WXPayEntryTemplate extends BaseWXPayEntryActivity {
     protected void onPaySuccess() {
         Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
         finish();
-        overridePendingTransition(0, 0);
-        WangfuWeChat.getInstance().getPayCallback().onPaySuccess();
+        overridePendingTransition(0, 0);  //activity切换的动画
+        WangfuWeChat.getInstance().getPayCallback().onPaySuccess();  //这个onPaySuccess函数是在ConfirmOrderDelegate的232行
     }
 
     @Override

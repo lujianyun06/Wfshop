@@ -67,7 +67,7 @@ public class WangfuWeChat {
     }
 
     public final void startPay(PayReq payReq) {
-        WXAPI.sendReq(payReq);
+        WXAPI.sendReq(payReq);   //真正调起微信，支付的回调
     }
 
 }

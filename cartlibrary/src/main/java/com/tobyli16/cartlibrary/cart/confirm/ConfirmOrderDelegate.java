@@ -89,9 +89,9 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
                 }
             }
             if (type == 0) {
-                new AliPaymentTask().execute(cost,"网服商城");
+                new AliPaymentTask().execute(cost,"网服商城");  //支付宝
             } else if (type == 1) {
-                wechatPay(orderId);
+                wechatPay(orderId);         //微信付款
             }
         }
     }
@@ -124,7 +124,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
 
         @Override
         protected void onPreExecute() {
-            $(R.id.tv_create_order_pay).setOnClickListener(null);
+            $(R.id.tv_create_order_pay).setOnClickListener(null);   //处理的时候屏蔽订单按钮
         }
 
         @Override
@@ -164,7 +164,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
                 case AL_PAY_STATUS_SUCCESS:
                     Toast.makeText(getContext(),"支付成功",Toast.LENGTH_SHORT).show();
                     getSupportDelegate().startWithPop(new PaySuccessDelegate());
-                    //支付成功后还要做一次网络请求？
+                    //支付成功后还要做一次网络请求？此项举动看支付宝的支付流程，在支付宝调用完成后还需要把数据返给app服务端
                     RestClient.builder()
                             .url("https://wfshop.andysheng.cn/order/"+orderId+"/paid")
                             .build()
@@ -188,13 +188,21 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
         }
     }
 
+    /*
+    微信支付顺序：
+    步骤1：用户进入商户APP，选择商品下单、确认购买，进入支付环节。商户服务后台生成支付订单，签名后将数据传输到APP端。以微信提供的DEMO为例。
+    步骤2：用户点击后发起支付操作，进入到微信界面，调起微信支付，出现确认支付界面。
+    步骤3：用户确认收款方和金额，点击立即支付后出现输入密码界面，可选择零钱或银行卡支付。
+    第四步：输入正确密码后，支付完成，用户端微信出现支付详情页面。
+    第五步：回跳到商户APP中，商户APP根据支付结果个性化展示订单处理结果。
+     */
     private void wechatPay(String orderId) {
         final String weChatPrePayUrl = "http://tobyli16.com:8080/pay/wechat/" + orderId;
         WangfuLogger.d("WX_PAY", weChatPrePayUrl);
 
         WangfuLoader.showLoading(getContext());
         final String appId = Wangfu.getConfiguration(ConfigKeys.WE_CHAT_APP_ID);
-        RestClient.builder()
+        RestClient.builder()  //向服务器发送数据，使得服务器生成订单
                 .params("amount","1")
                 .params("body","商品测试")
                 .params("callbackUrl","https://wfshop.andysheng.cn/payment/wechat_callback")
@@ -203,7 +211,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
                     @Override
                     public void onSuccess(String response) {
                         $(R.id.tv_create_order_pay).setOnClickListener(ConfirmOrderDelegate.this);
-                        WangfuLoader.stopLoading();
+                        WangfuLoader.stopLoading();  //服务器订单回传到app,此时服务器已经获得从微信服务器获得的预订单信息了
                         final JSONObject result =
                                 JSON.parseObject(response).getJSONObject("result");
                         final String prepayId = result.getString("prepayid");
@@ -213,7 +221,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
                         final String nonceStr = result.getString("noncestr");
                         final String paySign = result.getString("sign");
 
-                        final PayReq payReq = new PayReq();
+                        final PayReq payReq = new PayReq();  //构建要发给微信的请求体
                         payReq.appId = appId;
                         payReq.prepayId = prepayId;
                         payReq.partnerId = partnerId;
@@ -238,7 +246,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
                                         getSupportDelegate().startWithPop(new PayFailDelegate());
                                     }
                                 })
-                                .startPay(payReq);
+                                .startPay(payReq); //向微信发送请求信息
                     }
                 })
                 .build()
