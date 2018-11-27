@@ -16,5 +16,6 @@ public enum MultipleFields {
     TAG,
     HEIGHT,
     DESCRIPTION,
-    PRICE
+    PRICE,
+    ACTION_URL
 }

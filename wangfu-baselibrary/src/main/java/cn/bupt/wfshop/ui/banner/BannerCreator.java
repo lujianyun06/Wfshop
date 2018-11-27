@@ -29,4 +29,20 @@ public class BannerCreator {
                 .setCanLoop(true);
 
     }
+
+    public static void setDefault(ConvenientBanner<String> convenientBanner,
+                                  ArrayList<String> banners,
+                                  OnItemClickListener clickListener,
+                                  int duration) {
+
+        convenientBanner
+                .setPages(new HolderCreator(), banners)
+                .setPageIndicator(new int[]{R.drawable.dot_normal, R.drawable.dot_focus})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                .setOnItemClickListener(clickListener)
+                .setPageTransformer(new DefaultTransformer())
+                .startTurning(duration * 1000)
+                .setCanLoop(true);
+
+    }
 }

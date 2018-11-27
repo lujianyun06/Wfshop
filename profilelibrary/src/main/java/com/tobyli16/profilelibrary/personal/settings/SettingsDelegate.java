@@ -76,4 +76,9 @@ public class SettingsDelegate extends WangfuDelegate {
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new SettingsClickListener(this));
     }
+
+    //dontuseit
+    private void backDoor(){
+
+    }
 }

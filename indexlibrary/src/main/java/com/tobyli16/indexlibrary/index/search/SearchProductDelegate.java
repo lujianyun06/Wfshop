@@ -16,17 +16,11 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.choices.divider.Divider;
 import com.choices.divider.DividerItemDecoration;
 import com.tobyli16.indexlibrary.R;
-import com.tobyli16.indexlibrary.index.IndexEvent.IndexEventTag;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
-import cn.bupt.wfshop.event.WFEvent;
-import cn.bupt.wfshop.net.NetManager;
+import cn.bupt.wfshop.net.URLManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.IError;
 import cn.bupt.wfshop.net.callback.IFailure;
@@ -86,7 +80,7 @@ public class SearchProductDelegate extends WangfuDelegate {
 
     private void networkOperation(){
         //        String url = "http://admin.swczyc.com/hyapi/ymmall/product/search?specialty_name="+searchWord;
-        String url = NetManager.SEARCH_URL + "?key=" + searchWord;
+        String url = URLManager.SEARCH_URL + "?key=" + searchWord;
         RestClient.builder()
                 .loader(getContext())
                 .url(url)

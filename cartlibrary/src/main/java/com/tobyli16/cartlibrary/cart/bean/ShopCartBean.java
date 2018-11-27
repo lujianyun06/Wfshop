@@ -1,5 +1,6 @@
 package com.tobyli16.cartlibrary.cart.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class ShopCartBean {
      * count : null
      */
 
-    private List<CartlistBean> cartlist;
+    private List<CartlistBean> cartlist = new ArrayList<>();
 
 
     public int getShopId() {
@@ -58,7 +59,7 @@ public class ShopCartBean {
 
     public static class CartlistBean {
         private int id;
-        private int shopId;
+        private int shopId;     //
         private String shopName;
         private int productId;
         private String productName;

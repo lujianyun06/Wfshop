@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:background="@color/viewfinder_mask">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_index"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/app_main">
+        android:background="@color/colorPrimaryDark">
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:background="@color/transparent"
             android:orientation="horizontal">
 
             <com.joanzapata.iconify.widget.IconTextView
@@ -25,7 +28,7 @@
                 android:layout_weight="1"
                 android:gravity="start|center_vertical"
                 android:text="{icon-scan}"
-                android:textColor="#525252"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -49,7 +52,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="{fa-search}"
-                android:textColor="#525252"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
@@ -66,5 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

@@ -23,6 +23,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.MyView
 
     private Context context;
     private List<ShopCartBean.CartlistBean> data;
+    private List<ShopCartBean> supDatas;
     private View headerView;
     private OnDeleteClickListener mOnDeleteClickListener;
     private OnEditClickListener mOnEditClickListener;
@@ -61,48 +62,27 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.MyView
         holder.etShopCartClothNum.setText(data.get(position).getCount() + "");
 
         if(mOnResfreshListener != null){
-            boolean isSelect = false;
-            for(int i = 0;i < data.size(); i++){
-                if(!data.get(i).getIsSelect()){
-                    isSelect = false;
-                    break;
-                }else{
-                    isSelect = true;
-                }
-            }
-            mOnResfreshListener.onResfresh(isSelect);  //这个接口的实现在shopCartDelegate中
+            refreshStatus();
         }
 
         holder.ivShopCartClothMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(data.get(position).getCount() > 1) {
-                    int count = data.get(position).getCount() - 1;
-                    if (mOnEditClickListener != null) {
-                        mOnEditClickListener.onEditClick(position, data.get(position).getId(), count);
-                    }
-                    data.get(position).setCount(count);
-                    notifyDataSetChanged();
-                }
+                subItem(position);
             }
         });
 
         holder.ivShopCartClothAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = data.get(position).getCount() + 1;
-                if(mOnEditClickListener != null){
-                    mOnEditClickListener.onEditClick(position,data.get(position).getId(),count);
-                }
-                data.get(position).setCount(count);
-                notifyDataSetChanged();
+                addItem(position);
             }
         });
 
         if(data.get(position).getIsSelect()){
-            holder.ivShopCartClothSel.setImageDrawable(context.getResources().getDrawable(R.drawable.shopcart_selected));
+            holder.ivShopCartItemSel.setImageDrawable(context.getResources().getDrawable(R.drawable.shopcart_selected));
         }else {
-            holder.ivShopCartClothSel.setImageDrawable(context.getResources().getDrawable(R.drawable.shopcart_unselected));
+            holder.ivShopCartItemSel.setImageDrawable(context.getResources().getDrawable(R.drawable.shopcart_unselected));
         }
 
         if(data.get(position).getIsShopSelect()){
@@ -118,26 +98,10 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.MyView
             }
         });
 
-        holder.ivShopCartClothSel.setOnClickListener(new View.OnClickListener() {
+        holder.ivShopCartItemSel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setSelect(!data.get(position).getIsSelect());
-                //通过循环找出不同商铺的第一个商品的位置
-                for(int i = 0;i < data.size(); i++){
-                    if(data.get(i).getIsFirst() == 1) {
-                        //遍历去找出同一家商铺的所有商品的勾选情况
-                        for(int j = 0;j < data.size();j++){
-                            //如果是同一家商铺的商品，并且其中一个商品是未选中，那么商铺的全选勾选取消
-                            if(data.get(j).getShopId() == data.get(i).getShopId() && !data.get(j).getIsSelect()){
-                                data.get(i).setShopSelect(false);
-                                break;
-                            }else{
-                                //如果是同一家商铺的商品，并且所有商品是选中，那么商铺的选中全选勾选
-                                data.get(i).setShopSelect(true);
-                            }
-                        }
-                    }
-                }
+                selectItem(position);
                 notifyDataSetChanged();
             }
         });
@@ -145,18 +109,74 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.MyView
         holder.ivShopCartShopSel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(data.get(position).getIsFirst() == 1) {
-                    data.get(position).setShopSelect(!data.get(position).getIsShopSelect());
-                    for(int i = 0;i < data.size();i++){
-                        if(data.get(i).getShopId() == data.get(position).getShopId()){
-                            data.get(i).setSelect(data.get(position).getIsShopSelect());
-                        }
-                    }
-                    notifyDataSetChanged();
-                }
+                selectShop(position);
+                notifyDataSetChanged();
             }
         });
+    }
 
+    private void refreshStatus(){
+        boolean isSelect = false;
+        for(int i = 0;i < data.size(); i++){
+            if(!data.get(i).getIsSelect()){
+                isSelect = false;
+                break;
+            }else{
+                isSelect = true;
+            }
+        }
+        mOnResfreshListener.onResfresh(isSelect);  //这个接口的实现在shopCartDelegate中
+    }
+
+    private void addItem(int position){
+        int count = data.get(position).getCount() + 1;
+        if(mOnEditClickListener != null){
+            mOnEditClickListener.onEditClick(position,data.get(position).getId(),count);
+        }
+        data.get(position).setCount(count);
+        notifyDataSetChanged();
+    }
+
+    private void subItem(int position){
+        if(data.get(position).getCount() > 1) {
+            int count = data.get(position).getCount() - 1;
+            if (mOnEditClickListener != null) {
+                mOnEditClickListener.onEditClick(position, data.get(position).getId(), count);
+            }
+            data.get(position).setCount(count);
+            notifyDataSetChanged();
+        }
+    }
+
+    private void selectItem(int position){
+        data.get(position).setSelect(!data.get(position).getIsSelect());
+        //通过循环找出不同商铺的第一个商品的位置
+        for(int i = 0;i < data.size(); i++){
+            if(data.get(i).getIsFirst() == 1) {
+                //遍历去找出同一家商铺的所有商品的勾选情况
+                for(int j = 0;j < data.size();j++){
+                    //如果是同一家商铺的商品，并且其中一个商品是未选中，那么商铺的全选勾选取消
+                    if(data.get(j).getShopId() == data.get(i).getShopId() && !data.get(j).getIsSelect()){
+                        data.get(i).setShopSelect(false);
+                        break;
+                    }else{
+                        //如果是同一家商铺的商品，并且所有商品是选中，那么商铺的选中全选勾选
+                        data.get(i).setShopSelect(true);
+                    }
+                }
+            }
+        }
+    }
+
+    private void selectShop(int position){
+        if(data.get(position).getIsFirst() == 1) {
+            data.get(position).setShopSelect(!data.get(position).getIsShopSelect());
+            for(int i = 0;i < data.size();i++){
+                if(data.get(i).getShopId() == data.get(position).getShopId()){
+                    data.get(i).setSelect(data.get(position).getIsShopSelect());
+                }
+            }
+        }
     }
 
     private void showDialog(final View view, final int position) {
@@ -202,7 +222,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.MyView
         private TextView tvShopCartClothPrice;
         private TextView etShopCartClothNum;
         private TextView tvShopCartClothAttr;
-        private ImageView ivShopCartClothSel;
+        private ImageView ivShopCartItemSel;
         private ImageView ivShopCartClothMinus;
         private ImageView ivShopCartClothAdd;
         private ImageView ivShopCartClothDelete;
@@ -219,7 +239,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.MyView
             tvShopCartClothPrice = (TextView) view.findViewById(R.id.tv_item_shopcart_cloth_price);
             etShopCartClothNum = (TextView) view.findViewById(R.id.et_item_shopcart_cloth_num);
             tvShopCartClothAttr = (TextView) view.findViewById(R.id.tv_item_shopcart_attr);
-            ivShopCartClothSel = (ImageView) view.findViewById(R.id.tv_item_shopcart_clothselect);
+            ivShopCartItemSel = (ImageView) view.findViewById(R.id.tv_item_shopcart_clothselect);
             ivShopCartClothMinus = (ImageView) view.findViewById(R.id.iv_item_shopcart_cloth_minus);
             ivShopCartClothAdd = (ImageView) view.findViewById(R.id.iv_item_shopcart_cloth_add);
             ivShopCartClothPic = (ImageView) view.findViewById(R.id.iv_item_shopcart_cloth_pic);

@@ -14,7 +14,7 @@ import com.tobyli16.productcategorylibrary.sort.SortDelegate;
 import java.util.List;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
-import cn.bupt.wfshop.net.NetManager;
+import cn.bupt.wfshop.net.URLManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.IError;
 import cn.bupt.wfshop.net.callback.IFailure;
@@ -54,7 +54,7 @@ public class VerticalListDelegate extends WangfuDelegate {
         super.onLazyInitView(savedInstanceState);
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/product/category/super_categories")
-                .url(NetManager.CATEGORY_URL)
+                .url(URLManager.CATEGORY_URL)
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override

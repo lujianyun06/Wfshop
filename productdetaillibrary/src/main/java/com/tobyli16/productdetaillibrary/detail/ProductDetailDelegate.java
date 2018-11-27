@@ -35,10 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
-import cn.bupt.wfshop.net.NetManager;
+import cn.bupt.wfshop.net.URLManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.IError;
-import cn.bupt.wfshop.net.callback.IFailure;
 import cn.bupt.wfshop.net.callback.ISuccess;
 import cn.bupt.wfshop.ui.animation.BezierAnimation;
 import cn.bupt.wfshop.ui.animation.BezierUtil;
@@ -214,7 +213,7 @@ public class ProductDetailDelegate extends WangfuDelegate implements
     private void initData() {
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/product/search?specialty_id="+mGoodsId)
-                .url( NetManager.PRODUCT_URL + "/"+mGoodsId)
+                .url( URLManager.PRODUCT_URL + "/"+mGoodsId)
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override

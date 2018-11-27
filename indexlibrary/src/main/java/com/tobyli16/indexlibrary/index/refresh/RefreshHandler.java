@@ -10,11 +10,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import cn.bupt.wfshop.app.Wangfu;
 import cn.bupt.wfshop.net.RestClient;
+import cn.bupt.wfshop.net.URLManager;
 import cn.bupt.wfshop.net.callback.IError;
 import cn.bupt.wfshop.net.callback.IFailure;
 import cn.bupt.wfshop.net.callback.ISuccess;
 import cn.bupt.wfshop.ui.recycler.DataConverter;
-import cn.bupt.wfshop.ui.recycler.MultipleRecyclerAdapter;
 import cn.bupt.wfshop.util.log.WangfuLogger;
 
 /**
@@ -28,12 +28,12 @@ public class RefreshHandler implements
     private final SwipeRefreshLayout REFRESH_LAYOUT;
     private final PagingBean BEAN;
     private final RecyclerView RECYCLERVIEW;
-    private MultipleRecyclerAdapter mAdapter = null;
-    private final DataConverter CONVERTER;
+    private HomePageRecyclerAdapter mAdapter = null;
+    private final HomeDataConvert CONVERTER;
 
     private RefreshHandler(SwipeRefreshLayout swipeRefreshLayout,
                            RecyclerView recyclerView,
-                           DataConverter converter, PagingBean bean) {
+                           HomeDataConvert converter, PagingBean bean) {
         this.REFRESH_LAYOUT = swipeRefreshLayout;
         this.RECYCLERVIEW = recyclerView;
         this.CONVERTER = converter;
@@ -42,7 +42,7 @@ public class RefreshHandler implements
     }
 
     public static RefreshHandler create(SwipeRefreshLayout swipeRefreshLayout,
-                                        RecyclerView recyclerView, DataConverter converter) {
+                                        RecyclerView recyclerView, HomeDataConvert converter) {
         return new RefreshHandler(swipeRefreshLayout, recyclerView, converter, new PagingBean());
     }
 
@@ -56,7 +56,7 @@ public class RefreshHandler implements
                 REFRESH_LAYOUT.setRefreshing(false);
                 CONVERTER.clearData();
                 BEAN.setPageIndex(0);
-                firstPage("http://tobyli16.com/index.php");
+                firstPage(URLManager.BASEURL + URLManager.HOME_PAGE);
             }
         }, 1000);
     }
@@ -75,8 +75,10 @@ public class RefreshHandler implements
                         BEAN.setTotal(object.getInteger("total"))
                                 .setPageSize(object.getInteger("page_size"));
                         //设置Adapter
-                        mAdapter = MultipleRecyclerAdapter.create(CONVERTER.setJsonData(response));
-                        mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
+                        mAdapter = HomePageRecyclerAdapter.create(CONVERTER.setJsonData(response));
+                        //TODO 这可能是产生正在加载更多的原因
+//                        mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
+//                        mAdapter.setHeaderView()
                         RECYCLERVIEW.setAdapter(mAdapter);
                         BEAN.addIndex();
                     }

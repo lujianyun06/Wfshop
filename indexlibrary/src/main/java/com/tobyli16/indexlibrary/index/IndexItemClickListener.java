@@ -6,6 +6,7 @@ import android.view.View;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
+import com.tobyli16.indexlibrary.index.refresh.HomeMultiItemEntity;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.ui.recycler.MultipleFields;
@@ -29,13 +30,13 @@ public class IndexItemClickListener extends SimpleClickListener {
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        final MultipleItemEntity entity = (MultipleItemEntity) baseQuickAdapter.getData().get(position);
-        final int goodsId = entity.getField(MultipleFields.ID);
+        final HomeMultiItemEntity entity = (HomeMultiItemEntity) baseQuickAdapter.getData().get(position);
+//        final int goodsId = entity.getField(MultipleFields.ID);
 //        final GoodsDetailDelegate delegate = GoodsDetailDelegate.create(goodsId);
-        Fragment fragment = (Fragment) ARouter.getInstance().build("/productDetail/productId/").withString("goodsId",String.valueOf(goodsId)).navigation();
-        if (fragment != null) {
-            DELEGATE.getSupportDelegate().start((WangfuDelegate)fragment);
-        }
+//        Fragment fragment = (Fragment) ARouter.getInstance().build("/productDetail/productId/").withString("goodsId",String.valueOf(goodsId)).navigation();
+//        if (fragment != null) {
+//            DELEGATE.getSupportDelegate().start((WangfuDelegate)fragment);
+//        }
     }
 
     @Override

@@ -88,7 +88,7 @@ public abstract class BaseBottomDelegate extends WangfuDelegate implements View.
             //初始化数据
             itemIcon.setText(bean.getIcon());  //图片的三方库，图片为矢量图，可以当做文字一样的添加
             itemTitle.setText(bean.getTitle());
-            if (i == mIndexDelegate) {      //如果i等于当前选中的号，则切换显示状态
+            if (i == mIndexDelegate) {      //如果i等于当前选中的号，则切换显示状态,这里是初始化将刚进去时默认选中index页面
                 itemIcon.setTextColor(mClickedColor);
                 itemTitle.setTextColor(mClickedColor);
             }

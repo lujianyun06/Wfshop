@@ -44,22 +44,41 @@ public class OtherSettingDelegate extends WangfuDelegate {
         rvSettings.addOnItemTouchListener(new PersonalClickListener(this));
     }
 
-    private void initListBean(){
+    private void initListBean() {
 
-        final ListBean address = new ListBean.Builder()
-                .setItemType(ListItemType.ITEM_NORMAL)
-                .setId(1)
-                .setDelegate(new AddressDelegate())
-                .setText("收货地址")
-                .build();
+//        final ListBean address = new ListBean.Builder()
+//                .setItemType(ListItemType.ITEM_NORMAL)
+//                .setId(1)
+//                .setDelegate(new AddressDelegate())
+//                .setText("收货地址")
+//                .build();
+//
+//        final ListBean system = new ListBean.Builder()
+//                .setItemType(ListItemType.ITEM_NORMAL)
+//                .setId(2)
+//                .setDelegate(new SettingsDelegate())
+//                .setText("系统设置")
+//                .build();
+        data.add(new ListBeanContainer(1, new AddressDelegate(), "收货地址", ListItemType.ITEM_NORMAL).getListBean());
+        data.add(new ListBeanContainer(2, new SettingsDelegate(), "系统设置", ListItemType.ITEM_NORMAL).getListBean());
+    }
 
-        final ListBean system = new ListBean.Builder()
-                .setItemType(ListItemType.ITEM_NORMAL)
-                .setId(2)
-                .setDelegate(new SettingsDelegate())
-                .setText("系统设置")
-                .build();
-        data.add(address);
-        data.add(system);
+
+    public class ListBeanContainer {
+
+        private ListBean listBean;
+
+        public ListBeanContainer(int id, WangfuDelegate jumTargetDelegate, String text, int listItemType) {
+            listBean = new ListBean.Builder()
+                    .setItemType(listItemType)
+                    .setId(id)
+                    .setDelegate(jumTargetDelegate)
+                    .setText(text)
+                    .build();
+        }
+
+        public ListBean getListBean() {
+            return listBean;
+        }
     }
 }

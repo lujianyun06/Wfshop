@@ -49,6 +49,12 @@ android {
         }
     }
 
+    repositories {
+        flatDir {
+            dirs 'libs',  "../wangfu-baselibrary/libs"
+        }
+    }
+
 }
 
 dependencies {

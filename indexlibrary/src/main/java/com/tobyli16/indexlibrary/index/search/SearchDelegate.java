@@ -31,7 +31,6 @@ import java.util.List;
 import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.delegates.web.event.Event;
 import cn.bupt.wfshop.event.WFEvent;
-import cn.bupt.wfshop.net.NetManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.IError;
 import cn.bupt.wfshop.net.callback.ISuccess;
@@ -58,7 +57,7 @@ public class SearchDelegate extends WangfuDelegate {
         *
          */
 //        RestClient.builder()
-//                .url(NetManager.SEARCH_URL + "?key=" + )
+//                .url(URLManager.SEARCH_URL + "?key=" + )
 //                .loader(getContext())
 //                .success(new ISuccess() {
 //                    @Override

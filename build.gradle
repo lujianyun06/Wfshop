@@ -10,6 +10,9 @@ buildscript {
 
 allprojects {
     repositories {
+        flatDir {
+            dirs 'libs'
+        }
         jcenter()
         mavenCentral()
         //BaseRecyclerViewAdapterHelper

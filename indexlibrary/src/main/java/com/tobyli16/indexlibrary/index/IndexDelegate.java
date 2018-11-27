@@ -9,9 +9,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -20,14 +22,11 @@ import com.tobyli16.indexlibrary.R;
 import com.tobyli16.indexlibrary.index.refresh.RefreshHandler;
 import com.tobyli16.indexlibrary.index.search.SearchDelegate;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import cn.bupt.wfshop.app.ConfigKeys;
 import cn.bupt.wfshop.app.Wangfu;
 import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.delegates.bottom.BottomItemDelegate;
-import cn.bupt.wfshop.delegates.web.event.Event;
+import cn.bupt.wfshop.net.URLManager;
 import cn.bupt.wfshop.ui.recycler.BaseDecoration;
 import cn.bupt.wfshop.util.callback.CallbackManager;
 import cn.bupt.wfshop.util.callback.CallbackType;
@@ -61,8 +60,9 @@ public class IndexDelegate extends BottomItemDelegate {
 
 
 
-
+        //创建刷新handler
         mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
+
         //处理二维码后的回调，需要注意的是，这些代码是一个初始化的过程，回调先不会使用，但会将这个事务加入callback队列，，当扫描二维码完成后
         //会在ScannerDelegate中调用executeCallback
         CallbackManager.getInstance()
@@ -114,16 +114,17 @@ public class IndexDelegate extends BottomItemDelegate {
     }
 
     private void initRecyclerView() {
-        int spanCount;
-        try{
-            spanCount = Wangfu.getConfiguration(ConfigKeys.SPAN_COUNT);
-        } catch (NullPointerException e) {
-            spanCount = 120;
-        }
-        final GridLayoutManager manager = new GridLayoutManager(getContext(), spanCount);
+//        int spanCount;
+//        try{
+//            spanCount = Wangfu.getConfiguration(ConfigKeys.SPAN_COUNT);
+//        } catch (NullPointerException e) {
+//            spanCount = 120;
+//        }
+//        final GridLayoutManager manager = new GridLayoutManager(getContext(), spanCount);
         final Context context = getContext();
         //TODO 这句代码中的 stopscroll 导致下拉刷新球无法被拉出,并且swipelayout和recycleView共同使用可能会导致滑动冲突
-        mRecyclerView.setLayoutManager(manager);
+//        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         if (context != null) {
             mRecyclerView.addItemDecoration
                     (BaseDecoration.create(ContextCompat.getColor(context, R.color.app_background), 5));
@@ -136,7 +137,7 @@ public class IndexDelegate extends BottomItemDelegate {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
         initRecyclerView();
-        mRefreshHandler.firstPage("http://tobyli16.com/index.php");
+        mRefreshHandler.firstPage(URLManager.HOME_PAGE);
     }
 
     @Override

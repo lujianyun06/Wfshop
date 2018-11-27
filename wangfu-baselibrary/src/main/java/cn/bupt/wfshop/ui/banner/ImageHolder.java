@@ -3,6 +3,8 @@ package cn.bupt.wfshop.ui.banner;
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;

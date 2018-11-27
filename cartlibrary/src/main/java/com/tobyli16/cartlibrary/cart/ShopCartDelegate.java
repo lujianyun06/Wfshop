@@ -27,7 +27,7 @@ import java.util.WeakHashMap;
 
 import cn.bupt.wfshop.delegates.WangfuDelegate;
 import cn.bupt.wfshop.delegates.bottom.BottomItemDelegate;
-import cn.bupt.wfshop.net.NetManager;
+import cn.bupt.wfshop.net.URLManager;
 import cn.bupt.wfshop.net.RestClient;
 import cn.bupt.wfshop.net.callback.ISuccess;
 
@@ -44,7 +44,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
     private ShopCartAdapter mShopCartAdapter;
     private LinearLayout llPay;
     private RelativeLayout rlHaveProduct;
-    private List<ShopCartBean.CartlistBean> mAllOrderList = new ArrayList<>();
+    private List<ShopCartBean> mAllOrderList = new ArrayList<>();
     private ArrayList<ShopCartBean.CartlistBean> mGoPayList = new ArrayList<>();
     private List<String> mHotProductsList = new ArrayList<>();
     private TextView tvShopCartTotalPrice;
@@ -117,9 +117,9 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
         super.onLazyInitView(savedInstanceState);
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/get_items?wechat_id=8")
-                .url(NetManager.CART_URL)
+                .url(URLManager.CART_URL)
                 .loader(getContext())
-                .success(this)
+                .success(this)  //回调成功的接口是本类的方法onSuccess
                 .build()
                 .get();
         hasLazyLoad = true;
@@ -130,7 +130,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
         super.onHiddenChanged(hidden);
         RestClient.builder()
 //                .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/get_items?wechat_id=8")
-                .url(NetManager.CART_URL)
+                .url(URLManager.CART_URL)
                 .loader(getContext())
                 .success(this)
                 .build()
@@ -143,53 +143,15 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
     public void onSuccess(String response) {
         mAllOrderList = new ArrayList<>();
         JSONObject responseJsonObject = JSON.parseObject(response);
-//        JSONArray jsonArray = responseJsonObject.getJSONArray("obj");
-//        for (int i = 0; i < jsonArray.size(); i++) {
-//            JSONObject cartObject = jsonArray.getJSONObject(i);
-//            JSONObject shopObject = shopAllObject.getJSONObject("shop");
-//            JSONArray cartObjects = shopAllObject.getJSONArray("cart_items");
-//            for (int j = 0; j < cartObjects.size(); j++) {
-//                JSONObject cartObject = cartObjects.getJSONObject(j);
-//                ShopCartBean.CartlistBean cartlistBean = new ShopCartBean.CartlistBean();
-//                cartlistBean.setCount(Integer.parseInt(cartObject.getString("amount")));
-//                cartlistBean.setAttr("");
-//                cartlistBean.setDefaultPic(cartObject.getJSONObject("product").getString("cover_img"));
-//                cartlistBean.setIsFirst((j == 0) ? 1 : 2);
-//                cartlistBean.setSelect(true);
-//                cartlistBean.setShopSelect(true);
-//                cartlistBean.setPrice(cartObject.getJSONObject("product").getString("price"));
-//                cartlistBean.setProductId(Integer.parseInt(cartObject.getJSONObject("product").getString("id")));
-//                cartlistBean.setShopId(Integer.parseInt(shopObject.getString("id")));
-//                cartlistBean.setShopName(shopObject.getString("shop_name"));
-//                cartlistBean.setProductName(cartObject.getJSONObject("product").getString("name"));
-//                cartlistBean.setId(Integer.parseInt(cartObject.getString("id")));
-//                mAllOrderList.add(cartlistBean);
-//            }
 
-//            ShopCartBean.CartlistBean cartlistBean = new ShopCartBean.CartlistBean();
-//            cartlistBean.setCount(Integer.parseInt(cartObject.getString("quantity")));
-//            cartlistBean.setAttr(cartObject.getString("specification"));
-//            String iconUrl = cartObject.getString("iconURL");
-//            if (iconUrl == null) {
-//                iconUrl = "";
-//            }
-//            cartlistBean.setDefaultPic(iconUrl);
-//            cartlistBean.setIsFirst((i == 0) ? 1 : 2);
-//            cartlistBean.setSelect(true);
-//            cartlistBean.setShopSelect(true);
-//            cartlistBean.setPrice(String.valueOf(cartObject.getDouble("curPrice")));
-//            cartlistBean.setProductId(Integer.parseInt(cartObject.getString("specialtyId")));
-//            cartlistBean.setShopId(0);
-//            cartlistBean.setShopName("");
-//            cartlistBean.setProductName(cartObject.getString("name"));
-//            cartlistBean.setId(Integer.parseInt(cartObject.getString("id")));
-//            mAllOrderList.add(cartlistBean);
-//        }
         JSONArray jsonArray = responseJsonObject.getJSONArray("data");
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject shopAllObject = jsonArray.getJSONObject(i);
             JSONObject shopObject = shopAllObject.getJSONObject("shop");
             JSONArray cartObjects = shopAllObject.getJSONArray("cart_items");
+            ShopCartBean shopCartBean = new ShopCartBean();
+            shopCartBean.setShopId(shopObject.getInteger("id"));
+            shopCartBean.setShopName(shopObject.getString("shop_name"));
             for (int j = 0; j < cartObjects.size(); j++) {
                 JSONObject cartObject = cartObjects.getJSONObject(j);
                 ShopCartBean.CartlistBean cartlistBean = new ShopCartBean.CartlistBean();
@@ -201,15 +163,16 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
                 cartlistBean.setShopSelect(true);
                 cartlistBean.setPrice(cartObject.getJSONObject("product").getString("price"));
                 cartlistBean.setProductId(Integer.parseInt(cartObject.getJSONObject("product").getString("id")));
-                cartlistBean.setShopId(Integer.parseInt(shopObject.getString("id")));
+                cartlistBean.setShopId(shopCartBean.getShopId());
                 cartlistBean.setShopName(shopObject.getString("shop_name"));
                 cartlistBean.setProductName(cartObject.getJSONObject("product").getString("name"));
-                cartlistBean.setId(Integer.parseInt(cartObject.getString("id")));
-                mAllOrderList.add(cartlistBean);
+                cartlistBean.setId(j + 1);
+                shopCartBean.getCartlist().add(cartlistBean);
             }
+            mAllOrderList.add(shopCartBean);
         }
         rlvShopCart.setLayoutManager(new LinearLayoutManager(getContext()));
-        mShopCartAdapter = new ShopCartAdapter(getContext(), mAllOrderList);
+        mShopCartAdapter = new ShopCartAdapter(getContext(), convertData(mAllOrderList));
         rlvShopCart.setAdapter(mShopCartAdapter);
         mShopCartAdapter.notifyDataSetChanged();
 
@@ -219,7 +182,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
             public void onDeleteClick(View view, int position, int cartid) {
                 RestClient.builder()
 //                        .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/delete_items")
-                        .url(NetManager.CART_URL + "/modify/" + cartid)
+                        .url(URLManager.CART_URL + "/modify/" + cartid)
                         .params("quantity", 0)
 //                        .params("id", cartid)
                         .loader(getContext())
@@ -243,7 +206,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
                 RestClient.builder()
 //                        .url("http://admin.swczyc.com/hyapi/ymmall/shopping_cart/edit_items")
 //                        .params("id",cartid)
-                        .url(NetManager.CART_URL + "/modify/" + cartid)
+                        .url(URLManager.CART_URL + "/modify/" + cartid)
                         .params("quantity", count)
                         .loader(getContext())
                         .success(new ISuccess() {
@@ -261,24 +224,28 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
             @Override
             public void onResfresh(boolean isSelect) {
                 mSelect = isSelect;
-                if (isSelect) {
-                    Drawable left = getResources().getDrawable(R.drawable.shopcart_selected);
-                    tvShopCartSelect.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
-                } else {
-                    Drawable left = getResources().getDrawable(R.drawable.shopcart_unselected);
-                    tvShopCartSelect.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
-                }
+                Drawable left = mSelect ? getResources().getDrawable(R.drawable.shopcart_selected)
+                        : getResources().getDrawable(R.drawable.shopcart_unselected);
+                tvShopCartSelect.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
                 float mTotalPrice = 0;
                 int mTotalNum = 0;
                 mTotalPrice1 = 0;
                 mGoPayList.clear();
-                for (int i = 0; i < mAllOrderList.size(); i++)
-                    if (mAllOrderList.get(i).getIsSelect()) {
-                        mTotalPrice += Float.parseFloat(mAllOrderList.get(i).getPrice()) * mAllOrderList.get(i).getCount();
-                        //                        mTotalNum += 1;
-                        mTotalNum += mAllOrderList.get(i).getCount();
-                        mGoPayList.add(mAllOrderList.get(i));
+                for (int i = 0; i < mAllOrderList.size(); i++) {
+                    int len = mAllOrderList.get(i).getCartlist().size();
+                    for (int j = 0; j < len; j++) {
+                        ShopCartBean.CartlistBean cartlistBean = mAllOrderList.get(i).getCartlist().get(j);
+                        if (cartlistBean.getIsSelect()) {
+                            mTotalPrice += Float.parseFloat(cartlistBean.getPrice()) * cartlistBean.getCount();
+                            //                        mTotalNum += 1;
+                            mTotalNum += cartlistBean.getCount();
+                            mGoPayList.add(cartlistBean);
+                        }
+
                     }
+
+
+                }
                 mTotalPrice1 = mTotalPrice;
                 tvShopCartTotalPrice.setText("总价：" + mTotalPrice);
                 tvShopCartTotalNum.setText("共" + mTotalNum + "件商品");
@@ -286,76 +253,94 @@ public class ShopCartDelegate extends BottomItemDelegate implements View.OnClick
         });
 
         //全选
-        tvShopCartSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("tvShopCartSelect", "click!");
-                mSelect = !mSelect;
-                if (mSelect) {
-                    Drawable left = getResources().getDrawable(R.drawable.shopcart_selected);
-                    tvShopCartSelect.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
-                    for (int i = 0; i < mAllOrderList.size(); i++) {
-                        mAllOrderList.get(i).setSelect(true);
-                        mAllOrderList.get(i).setShopSelect(true);
-                    }
-                } else {
-                    Drawable left = getResources().getDrawable(R.drawable.shopcart_unselected);
-                    tvShopCartSelect.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
-                    for (int i = 0; i < mAllOrderList.size(); i++) {
-                        mAllOrderList.get(i).setSelect(false);
-                        mAllOrderList.get(i).setShopSelect(false);
-                    }
-                }
-                mShopCartAdapter.notifyDataSetChanged();
+        tvShopCartSelect.setOnClickListener(this);
+    }
+
+    private List<ShopCartBean.CartlistBean> convertData(List<ShopCartBean> shopCartBeans){
+        List<ShopCartBean.CartlistBean> cartlistBeans = new ArrayList<>();
+        int shopSize = shopCartBeans.size();
+        for (int i=0;i<shopSize;i++){
+            ShopCartBean shopCartBean = shopCartBeans.get(i);
+            cartlistBeans.addAll(shopCartBean.getCartlist());
+        }
+        return cartlistBeans;
+    }
+
+    private void submitBuy() {
+        WeakHashMap<String, Object> params = new WeakHashMap<>();
+        int len = mGoPayList.size();
+        for (int j = 0; j < len; j++) {
+            ShopCartBean.CartlistBean cartlistBean = mGoPayList.get(j);
+            if (cartlistBean.getIsSelect()) {
+                String s1 = "products[" + j + "]";
+                String s2 = "amounts[" + j + "]";
+                Float amount = cartlistBean.getCount() * Float.parseFloat(cartlistBean.getPrice());
+                params.put(s1, cartlistBean.getProductId());
+                params.put(s2, amount.toString());
             }
-        });
+        }
+
+        if (params.size() > 0) {
+            RestClient.builder()
+                    .url(URLManager.ORDER_URL + "/create")  //先给服务器提交想要交易的请求，请求成功后才跳到下一个页面
+                    .loader(getContext())
+                    .params(params)
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            JSONObject jsonObject = JSON.parseObject(response).getJSONObject("data");
+                            Fragment fragment = (Fragment) ARouter.getInstance()
+                                    .build("/profileOrderConfirm/profileOrderConfirm/")  //指向 ConfirmOrderDelegate
+                                    .withString("orderId", jsonObject.getString("id"))
+                                    .withString("cost", jsonObject.getString("cost"))
+                                    .navigation();
+                            getParentDelegate().getSupportDelegate().start((WangfuDelegate) fragment);
+
+                            int len = mGoPayList.size();
+                            for (int i = 0; i < len; i++) {
+                                ShopCartBean.CartlistBean buyingItem = mGoPayList.get(i);
+                                RestClient.builder()
+                                        .url(URLManager.CART_URL + "/modify/" + buyingItem.getId())
+                                        .loader(getContext())
+                                        .params("amount", 0)  //为啥给0？
+                                        .build()
+                                        .post();
+
+                            }
+                        }
+                    })
+                    .build()
+                    .post();
+        }
+    }
+
+    private void transSelectStatus() {
+        //全选
+        Log.d("tvShopCartSelect", "click!");
+        mSelect = !mSelect;
+        Drawable left = mSelect ?
+                getResources().getDrawable(R.drawable.shopcart_selected)
+                : getResources().getDrawable(R.drawable.shopcart_unselected);
+        tvShopCartSelect.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
+        for (int i = 0; i < mAllOrderList.size(); i++) {
+            int len = mAllOrderList.get(i).getCartlist().size();
+            for (int j = 0; j < len; j++) {
+                mAllOrderList.get(i).getCartlist().get(j).setSelect(mSelect);
+                mAllOrderList.get(i).getCartlist().get(j).setShopSelect(mSelect);
+
+            }
+        }
+        mShopCartAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void onClick(View view) {
-        int i = view.getId();
-        if (i == R.id.tv_shopcart_submit) {   //提交购买
-            WeakHashMap<String, Object> params = new WeakHashMap<>();
-            for (int j = 0; j < mAllOrderList.size(); j++) {
-                if (mAllOrderList.get(j).getIsSelect()) {
-                    String s1 = "products["+j+"]";
-                    String s2 = "amounts["+j+"]";
-                    params.put(s1,mAllOrderList.get(j).getProductId());
-                    params.put(s2,mAllOrderList.get(j).getCount());
-                }
-            }
-            if (params.size()>0) {
-                RestClient.builder()
-                        .url(NetManager.ORDER_URL + "/create")  //先给服务器提交想要交易的请求，请求成功后才跳到下一个页面
-                        .loader(getContext())
-                        .params(params)
-                        .success(new ISuccess() {
-                            @Override
-                            public void onSuccess(String response) {
-                                JSONObject jsonObject = JSON.parseObject(response).getJSONObject("data");
-                                Fragment fragment = (Fragment) ARouter.getInstance()
-                                        .build("/profileOrderConfirm/profileOrderConfirm/")  //指向 ConfirmOrderDelegate
-                                        .withString("orderId",jsonObject.getString("id"))
-                                        .withString("cost",jsonObject.getString("cost"))
-                                        .navigation();
-                                getParentDelegate().getSupportDelegate().start((WangfuDelegate)fragment);
-
-                                for (int j = 0; j < mAllOrderList.size(); j++) {
-                                    if (mAllOrderList.get(j).getIsSelect()) {
-                                        RestClient.builder()
-                                                .url(NetManager.CART_URL + "/modify/"+mAllOrderList.get(j).getId())
-                                                .loader(getContext())
-                                                .params("amount", 0)  //为啥给0？
-                                                .build()
-                                                .post();
-                                    }
-                                }
-                            }
-                        })
-                        .build()
-                        .post();
-            }
-
+        int viewId = view.getId();
+        if (viewId == R.id.tv_shopcart_submit) {   //提交购买
+            submitBuy();
+        } else if (viewId == tvShopCartSelect.getId()) {
+            transSelectStatus();
         }
     }
 }
