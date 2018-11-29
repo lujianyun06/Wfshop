@@ -54,5 +54,6 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
             default:
                 break;
         }
+        //TODO 让recycleview重新绘制大小
     }
 }

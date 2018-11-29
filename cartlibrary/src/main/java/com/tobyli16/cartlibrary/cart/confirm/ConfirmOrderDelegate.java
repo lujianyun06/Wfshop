@@ -97,7 +97,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
         checks.get(0).setVisibility(View.VISIBLE);
         payWay = 0;
         //测试数据
-        cost = "0.01";
+//        cost = "0.01";
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ConfirmOrderDelegate extends WangfuDelegate implements View.OnClick
             if (type == 0) {
 
                 //支付宝支付
-                AliPayManager.getInstance().pay(getProxyActivity(), cost, "网服商城");
+                AliPayManager.getInstance().pay(getProxyActivity(), orderId, cost, "网服商城");
             } else if (type == 1) {
                 wechatPay(orderId);         //微信付款
             }

@@ -16,4 +16,6 @@ public class URLManager {
 
     public static final String SEARCH_URL = "/search";
     public static final String HOME_PAGE = "/homepage";
+    public static final String ALIPAY_GET_SIGNEDORDER = "/alipay_createorder";
+
 }

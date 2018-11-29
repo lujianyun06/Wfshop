@@ -16,10 +16,15 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Map;
 
 import cn.bupt.wfshop.net.RestClient;
+import cn.bupt.wfshop.net.URLManager;
+import cn.bupt.wfshop.net.callback.IError;
+import cn.bupt.wfshop.net.callback.IFailure;
+import cn.bupt.wfshop.net.callback.ISuccess;
 import cn.bupt.wfshop.pay.PayEvent;
 import cn.bupt.wfshop.util.log.WangfuLogger;
 
 public class AliPayManager {
+    final public String TAG = "AliPayManager";
 
     final public String APP_ID = "2016091900550807";
     /**
@@ -65,9 +70,11 @@ public class AliPayManager {
     }
 
     class OrderInfoBundle{
+        public String orderId;
         public String name;
         public String cost;
-        public OrderInfoBundle(String name, String cost){
+        public OrderInfoBundle(String orderId, String cost, String name){
+            this.orderId = orderId;
             this.cost = cost;
             this.name = name;
         }
@@ -75,29 +82,61 @@ public class AliPayManager {
 
     //这里的orderinfo在真实环境中必须是由服务器生成的
     public void pay(Activity activity, String...params) {
-        OrderInfoBundle infoBundle = new OrderInfoBundle(params[1], params[0]);
-//        AliPayThread payThread = new AliPayThread(activity, payInfo);
-//        payThread.start();
+        OrderInfoBundle infoBundle = new OrderInfoBundle(params[0], params[1], params[2]);
 
-        SimSign(activity, infoBundle);
+        acquireSignedOrder(activity, infoBundle);
+//        SimSign(activity, infoBundle);
 
     }
+
+    private void acquireSignedOrder(final Activity activity, OrderInfoBundle infoBundle){
+        RestClient.builder()
+                .url(URLManager.ALIPAY_GET_SIGNEDORDER)
+                .params("name", infoBundle.name)
+                .params("cost", infoBundle.cost)
+                .params("orderId", infoBundle.orderId)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        AliPayThread payThread = new AliPayThread(activity, response);
+                        payThread.start();
+                    }
+                })
+                .failure(new IFailure() {
+                    @Override
+                    public void onFailure() {
+                        EventBus.getDefault().post(new PayEvent(PayEvent.ALIPAY, PayEvent.PAY_FAIL, "pay_Failed"));
+                    }
+                })
+                .error(new IError() {
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d(TAG,"error: code=" + code + " msg="  +msg);
+                        EventBus.getDefault().post(new PayEvent(PayEvent.ALIPAY, PayEvent.PAY_FAIL, "pay_Failed"));
+                    }
+                })
+                .build()
+                .get();
+
+    }
+
+
 
     //真实的付款线程,这里的orderinfo在真实环境中必须是由服务器生成的,
     // TODO 这里payinfo还没有和orderBundle做匹配，只是先试了一下模拟的环境
     class AliPayThread extends Thread {
         Activity activity = null;
-        String payInfo = null;
+        String signedInfo = null;
 
-        public AliPayThread(Activity activity, String payInfo) {
+        public AliPayThread(Activity activity, String signedInfo) {
             this.activity = activity;
-            this.payInfo = payInfo;
+            this.signedInfo = signedInfo;
         }
 
         @Override
         public void run() {
             PayTask alipay = new PayTask(activity);
-            Map<String, String> result = alipay.payV2(payInfo, true);
+            Map<String, String> result = alipay.payV2(signedInfo, true);
             Message msg = new Message();
             msg.what = AliPayManager.getInstance().SDK_PAY_FLAG;
             msg.obj = result;

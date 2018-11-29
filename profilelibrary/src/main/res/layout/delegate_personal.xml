@@ -565,12 +565,20 @@
             android:layout_height="20px"
             />
 
-        <android.support.v7.widget.ContentFrameLayout
+        <!--<android.support.v7.widget.ContentFrameLayout-->
+            <!--android:id="@+id/container_othersetting"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+        <!--</android.support.v7.widget.ContentFrameLayout>-->
+
+        <LinearLayout
             android:id="@+id/container_othersetting"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp"
+            android:orientation="vertical">
 
-        </android.support.v7.widget.ContentFrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
